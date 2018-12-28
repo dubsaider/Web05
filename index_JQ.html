@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		$(document).ready(function(e) {
+			var m = [
+			{
+				text:'Животные', 
+				childs:
+				[
+					{
+						text: 'Млекопитающие', 
+						childs: ['Коровы', 'Ослы', 'Собаки', 'Тигры']
+					},
+					{
+						text: 'Другие', 
+						childs: ['Змеи', 'Птицы','Ящерицы']
+					}
+					]
+			},
+			{
+				text:'Рыбы', 
+				childs:
+				[
+					{
+						text: 'Аквариумные', 
+						childs: ['Гуппи', 'Скалярии']
+					},
+					{
+						text: 'Морские', 
+						childs: ['Морская форель']
+					}
+				]
+			}
+		];
+
+			$('<ul>', {id: 'ul'}).appendTo('body');
+			$('<div>', {id: 'div'}).appendTo('body');
+			var Class1;
+			var PodClass1;
+			function recursPodPodClass(n) {
+				if (n < m[Class1].childs[PodClass1].childs.length){	
+					$('<li>', {text: m[Class1].childs[PodClass1].childs[n]}).appendTo('ul:(#ChildUl):last');
+					n++;
+					recursPodPodClass(n);
+				}
+			}
+
+			function recursPodClass(PodClass) {
+				if (PodClass < m[Class1].childs.length){
+					$('<li>', {text: m[Class1].childs[PodClass].text}).appendTo('ul:not(#ChildUl):last');
+					$('<ul>', {id: 'ChildUl'}).appendTo('li:last');
+					PodClass1 = PodClass;
+					PodClass++;
+					recursPodPodClass(0);
+					recursPodClass(PodClass);
+				}
+			}
+
+			function recursClass(Class) {
+				if (Class < m.length) {
+					$('<li>', {text: m[Class].text, id: 'li'}).appendTo('#ul');
+					$('<ul>').appendTo('li:last');
+					Class1 = Class;
+					Class++;
+					recursPodClass(0);
+					recursClass(Class);
+				}
+			}
+			recursClass(0);
+
+			$('li').click(function(event){
+				event.stopPropagation();
+				$(this).children().fadeToggle();
+			})
+			
+			$('li').each(function(){
+				$('#div').append($('<p>', { text: $(this).clone().children().remove().end().text() + $(this).find('li').length}));
+			})
+		});
+	</script>
+</body>
+</html>

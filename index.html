@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<script type="text/javascript">
+		var m = [
+			{
+				text:'Животные', 
+				childs:
+				[
+					{
+						text: 'Млекопитающие', 
+						childs: ['Коровы', 'Ослы', 'Собаки', 'Тигры']
+					},
+					{
+						text: 'Другие', 
+						childs: ['Змеи', 'Птицы','Ящерицы']
+					}
+					]
+			},
+			{
+				text:'Рыбы', 
+				childs:
+				[
+					{
+						text: 'Аквариумные', 
+						childs: ['Гуппи', 'Скалярии']
+					},
+					{
+						text: 'Морские', 
+						childs: ['Морская форель']
+					}
+				]
+			}
+		];
+		var Class1;
+		var PodClass1;
+		var n;
+		var ul = document.createElement('ul');
+		var ul1;
+		var ul2;
+		var li1;
+		var li2;
+		var DOM = document.body;
+
+		function recursPodPodClass(n) {
+			if (n < m[Class1].childs[PodClass1].childs.length){
+				var li = document.createElement('li');
+				li.innerHTML = m[Class1].childs[PodClass1].childs[n];
+				ul2.appendChild(li);
+				n++;
+				recursPodPodClass(n);
+			}
+		}
+
+		function recursPodClass(PodClass) {
+			if (PodClass < m[Class1].childs.length){
+				li2 = document.createElement('li');
+				li2.innerHTML = m[Class1].childs[PodClass].text;
+				ul1.appendChild(li2);
+				ul2 = document.createElement('ul');
+				li2.appendChild(ul2);
+				PodClass1 = PodClass;
+				PodClass++;
+				recursPodPodClass(0);
+				recursPodClass(PodClass);
+			}
+		}
+
+		function recursClass(Class) {
+			if (Class < m.length){
+				li1 = document.createElement('li');
+				li1.innerHTML = m[Class].text;
+				ul.appendChild(li1);
+				ul1 = document.createElement('ul');
+				li1.appendChild(ul1);
+				Class1 = Class;
+				Class++;
+				recursPodClass(0);
+				recursClass(Class);
+			}
+		}
+
+		recursClass(0);
+		document.body.appendChild(ul);
+	</script>
+	<script type="text/javascript">
+		function checkChild(element){
+			if(element.children.length > 0){
+				for (var i = 0; i < element.children.length; i++){
+					console.log(element.children[i]);
+					checkChild(element.children[i]);
+				}
+			}
+		}
+		checkChild(document);
+	</script>
+</body>
+</html>
